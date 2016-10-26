@@ -1,0 +1,28 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+
+  <servlet>  
+     <!-- 类名 -->  
+    <servlet-name>DealAction</servlet-name>  
+    <!-- 所在的包 -->  
+    <servlet-class>com.minsons.minmvc.controller.AllController</servlet-class> 
+    <load-on-startup>0</load-on-startup> 
+		<init-param> 
+		<param-name>configClass</param-name> 
+		<param-value>com.minsons.minmvc.demo.DemoConfig</param-value> 
+	</init-param> 
+  </servlet>  
+  
+  <servlet-mapping>  
+    <servlet-name>DealAction</servlet-name>  
+    <!-- 访问的网址 -->  
+    <url-pattern>/*</url-pattern>  
+   </servlet-mapping>  
+
+
+  <display-name>Archetype Created Web Application</display-name>
+</web-app>
