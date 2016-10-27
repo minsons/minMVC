@@ -19,6 +19,11 @@ public abstract class Controller {
 		this.urlPara = urlPara;
 	}
 	
+	void init(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		this.response = response;
+	}
+	
 	/**
 	 * 设置参数
 	 * @param name

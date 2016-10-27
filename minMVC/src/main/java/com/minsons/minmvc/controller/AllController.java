@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.minsons.minmvc.FilterChain.ActionDealFilter;
 import com.minsons.minmvc.FilterChain.FilterChainManager;
+import com.minsons.minmvc.FilterChain.PathResolveFilter;
+import com.minsons.minmvc.config.ConstantConfig;
 import com.minsons.minmvc.config.MinCofigure;
 import com.minsons.minmvc.config.Route;
 
@@ -39,6 +42,11 @@ public class AllController extends HttpServlet {
 				Route route=Route.getInstance();
 				//预加载控制器路由
 				configure.RouteConfig(route);
+				
+				configure.configConstant(ConstantConfig.getInstance());
+				
+				//this.getServletContext().setAttribute("viewPath", ConstantConfig.getConstantAttribute(ConstantConfig.VIEWPATH));
+
 		 
 		} 
 	
@@ -48,15 +56,17 @@ public class AllController extends HttpServlet {
 		            throws ServletException, IOException
 		  {
 		    
-			  FilterChainManager filterchains=new FilterChainManager(request);
+			  request.setCharacterEncoding("UTF-8");
+			  response.setContentType("text/html;charset=UTF-8");
+			  FilterChainManager filterchains=new FilterChainManager(request,response);
 			  
+			  System.out.println(request.getRequestURI());
 			  
+			  filterchains.add(new PathResolveFilter());
+			  filterchains.add(new ActionDealFilter());
+			  filterchains.doChain();
 			  
-			  
-			  
-			  
-			  
-			  
+			 // request.getRequestDispatcher("url").forward(request, response);
 			  
 			  
 			  

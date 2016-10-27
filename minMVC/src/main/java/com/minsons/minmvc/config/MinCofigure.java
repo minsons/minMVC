@@ -1,5 +1,7 @@
 package com.minsons.minmvc.config;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 public abstract class MinCofigure {
@@ -7,7 +9,7 @@ public abstract class MinCofigure {
 	/**
 	 * 配置常量
 	 */
-	public void configConstant() {
+	public void configConstant(ConstantConfig constant){
 		
 	}
 	

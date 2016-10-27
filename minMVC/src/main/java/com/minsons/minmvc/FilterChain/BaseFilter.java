@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface BaseFilter {
 	
 	
-	public boolean execute(Object obj );
+	public void execute(Object obj );
 	
 	public void setNextFilter(BaseFilter baseFilter);
 

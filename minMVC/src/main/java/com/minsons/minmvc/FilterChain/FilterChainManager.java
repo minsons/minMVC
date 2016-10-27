@@ -1,8 +1,11 @@
 package com.minsons.minmvc.FilterChain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 过滤链处理拦截
@@ -11,12 +14,33 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class FilterChainManager {
 	
-	HttpServletRequest request=null;
+	public HttpServletRequest request=null;
+	public HttpServletResponse response =null;
+	
+	public Map chainObje=null ;
+	
 	public FilterChainManager(){
-		
+		chainObje=new HashMap<String , Object>();
 	}
-    public FilterChainManager(HttpServletRequest request){
+    public Map getChainObje() {
+		return chainObje;
+	}
+	public void setChainObje(Map chainObje) {
+		this.chainObje = chainObje;
+	}
+	
+	public Object getChainObjAttribute(String key){
+		return chainObje.get(key);
+	}
+	
+	public void setChainObjAttribute(String key,Object obj){
+		 chainObje.put(key, obj);
+	}
+	
+	public FilterChainManager(HttpServletRequest request,HttpServletResponse response ){
 		this.request=request;
+		this.response=response;
+		chainObje=new HashMap<String , Object>();
 	}
 
 	public ArrayList<BaseFilter> filters=new ArrayList<BaseFilter>();

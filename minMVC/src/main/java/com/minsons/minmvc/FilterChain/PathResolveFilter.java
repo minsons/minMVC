@@ -16,23 +16,23 @@ public class PathResolveFilter implements BaseFilter {
 	
 	private BaseFilter baseFilter=null;
 	@Override
-	public boolean execute(Object content) {
+	public void execute(Object content) {
 	
 		System.out.println("do path Resolve... ...");
 		
-		HttpServletRequest request=(HttpServletRequest)content;
+		FilterChainManager filters=(FilterChainManager)content;
+		
+		HttpServletRequest request=filters.request;
 		String  uri= request.getRequestURI();
 		
 		System.out.println(uri);
 		
 	     Map map= Route.getAdaptMapByKey(uri);
+	     filters.getChainObje().put("uriResovle", map);
+	     
+		this.baseFilter.execute(content);
 		
 		
-		if(!this.baseFilter.execute(map)){
-			return false;
-		}
-		
-		return true;
 	}
 
 	@Override

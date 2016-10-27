@@ -86,7 +86,7 @@ public class Route {
 					mapContent.put("method",uri.substring(key.length()+1, uri.length()));
 				}
 			}
-			return null; 
+			return mapContent; 
 		}
 	
 	
