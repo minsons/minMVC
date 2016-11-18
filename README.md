@@ -83,6 +83,7 @@
  所有uri为“/test/index”的请求就会跳转到该controller进行业务的跳转处理
  
  例如如下：
+ 
  ···
   @RequestUrl("/test")
     public class TestController extends Controller {
@@ -99,6 +100,7 @@
 		}
 		
 ``` 
+
  那么请求路径就为  /test/index2
  
  
