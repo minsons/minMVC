@@ -1,10 +1,9 @@
-package com.minsons.minmvc.controller;
+﻿package com.minsons.minmvc.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +15,10 @@ import com.minsons.minmvc.FilterChain.FilterChainManager;
 import com.minsons.minmvc.FilterChain.PathResolveFilter;
 import com.minsons.minmvc.config.ConstantConfig;
 import com.minsons.minmvc.config.MinCofigure;
+import com.minsons.minmvc.config.ReflactRoute;
 import com.minsons.minmvc.config.Route;
+import com.minsons.minmvc.config.annotation.RequestUrl;
+import com.minsons.minmvc.config.util.FileUtils;
 
 @SuppressWarnings("serial")
 public class AllController extends HttpServlet {
@@ -47,6 +49,56 @@ public class AllController extends HttpServlet {
 				
 				//this.getServletContext().setAttribute("viewPath", ConstantConfig.getConstantAttribute(ConstantConfig.VIEWPATH));
 
+				String bathPath=this.getClass().getResource("/").getPath();
+				
+				List<String> allClasses=FileUtils.ApadatePatg(bathPath);
+			
+				for(String sou:allClasses){
+					
+					String strbat="";
+					try {  
+			            //实例化Class类对象 一般推荐此方式  
+			            Class  demo = Class.forName(sou);
+			            
+			            //获取class类上的注解
+			            if(demo.isAnnotationPresent(RequestUrl.class)){
+			            	RequestUrl annotation = (RequestUrl) demo.getAnnotation( RequestUrl.class );
+			            	strbat=annotation.value();
+			            	System.out.println("the base root:"+strbat);
+			            }
+			            //获取method上的注解
+			            Method[] methods = demo.getDeclaredMethods();  
+			            for (Method method : methods) {  
+			                if (method.isAnnotationPresent(RequestUrl.class)) {  
+			                    Annotation p = method.getAnnotation(RequestUrl.class);  
+			                    Method m = p.getClass()  
+			                            .getDeclaredMethod("value", null);
+			                    
+			                    String value = (String) m.invoke(p, null);  
+			                   // for (String key : values) {    这里是单个注解值不能用数组
+			                        System.out.println(m.getName()+":注解值 === " + value);  
+			                        
+			                        ReflactRoute routefa=new ReflactRoute();
+			                        routefa.setClassName(demo.getName());
+			                        routefa.setMethodName(method.getName());
+			                        routefa.setClassObj(demo);
+			                        System.out.println(strbat+value+":"+demo.getName()+":"+method.getName());
+			                       Route.addRouteReflact("/minMVC"+strbat+value, routefa);
+			                   // }  
+			                }  
+			            }  
+			            
+			            
+			        } catch (Exception e) {  
+			            e.printStackTrace();  
+			        }  
+					
+				}
+				
+				
+				
+				
+				
 		 
 		} 
 	

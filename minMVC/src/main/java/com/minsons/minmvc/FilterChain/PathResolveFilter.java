@@ -1,9 +1,11 @@
 package com.minsons.minmvc.FilterChain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.minsons.minmvc.config.ReflactRoute;
 import com.minsons.minmvc.config.Route;
 
 /**
@@ -27,9 +29,18 @@ public class PathResolveFilter implements BaseFilter {
 		
 		System.out.println(uri);
 		
-	     Map map= Route.getAdaptMapByKey(uri);
-	     filters.getChainObje().put("uriResovle", map);
-	     
+		Map<String,Object> map=new HashMap<>();
+		
+		ReflactRoute rot=Route.getRouteReflact(uri);
+		if(rot!=null){
+			map.put("actionClass", rot.getClassObj());
+			map.put("method", rot.getMethodName());
+			
+		}else{
+			  map= Route.getAdaptMapByKey(uri);
+		}
+		
+	    filters.getChainObje().put("uriResovle", map);
 		this.baseFilter.execute(content);
 		
 		

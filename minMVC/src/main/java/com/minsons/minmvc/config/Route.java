@@ -1,4 +1,4 @@
-package com.minsons.minmvc.config;
+﻿package com.minsons.minmvc.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,8 @@ public class Route {
 	
 	
 	private static Map<String, Class<? extends Controller>> map = new HashMap<String, Class<? extends Controller>>();
+	
+	private static Map<String , ReflactRoute> finalRoutMap=new HashMap<>();
 	
 	private static Route single=null;
 	private  Route(){
@@ -88,7 +90,22 @@ public class Route {
 			}
 			return mapContent; 
 		}
+
+	public static Map<String, ReflactRoute> getFinalRoutMap() {
+		return finalRoutMap;
+	}
+
+	public static void setFinalRoutMap(Map<String, ReflactRoute> finalRoutMap) {
+		Route.finalRoutMap = finalRoutMap;
+	}
 	
+	public static void addRouteReflact(String key , ReflactRoute route){
+		finalRoutMap.put(key, route);
+	}
+	
+	public static ReflactRoute getRouteReflact(String key){
+		return 	finalRoutMap.get(key);
+	}
 	
 
 }
