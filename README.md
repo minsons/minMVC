@@ -76,4 +76,37 @@
  * 创建controller类，需要继承com.minsons.minmvc.controller.Controller
  * 提交模板，默认是jsp，需要在方法中新建 Render进行提交数据到指定的页面
  * 模板的路径可以在 配置文件的常量里配置：constant.addViewPath("/WEB-INF/jsp/");
+
+
+ ##　注解的支持
+ 在controller的类或者方法名上加@RequestUrl("/test/index")
+ 所有uri为“/test/index”的请求就会跳转到该controller进行业务的跳转处理
+ 
+ 例如如下：
+ ···
+  @RequestUrl("/test")
+    public class TestController extends Controller {
+
+	
+	  //首页的处理
+	  @RequestUrl("/index2")
+		public Render index(){
+			
+			Render render=new Render();
+			render.RenderJSP("ok","real is success? yes of course成功了","success.jsp");
+			System.out.println("index deal success 成功了！ ");
+			return render;
+		}
+		
+``` 
+
+那么请求路径就为  /test/index2
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
